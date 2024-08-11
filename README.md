@@ -12,11 +12,11 @@ Brief description of your project.
 To set up this project locally, run the following commands:
 
 ```bash
-npm install --save-dev typescript
+npm install typescript
 ```
 
 ```bash
-npm install --save-dev eslint
+npm install --save-dev typescript
 ```
 
 ```bash
