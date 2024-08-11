@@ -16,6 +16,10 @@ npm install typescript
 ```
 
 ```bash
+npm install typescript-eslint
+```
+
+```bash
 npm install --save-dev typescript
 ```
 
