@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.46.0",
+    "typescript-eslint": "^8.0.1"
+  },
+  "name": "typescript-eslint",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
+    "eslint": "^9.9.0",
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "pretest": "tsc --noEmit && eslint tests/**",
+    "test:setup": "cross-env environment=uat npx playwright test --project=chromium --headed",
+    "test:uat": "npm run pretest && npm run test:setup",
+    "report":"npx playwright show-report"
+  },
+  "keywords": [],
+  "author": "tshifhiwa",
+  "license": "ISC",
+  "description": "typescript-eslint"
+}
