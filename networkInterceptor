@@ -1,0 +1,64 @@
+# this code intercept headers
+
+import { expect, Page, Response } from "@playwright/test";
+import logger from "./loggerUtil";
+
+export class NetworkInterceptor {
+  readonly page: Page;
+  private refreshTokenHeader: string | null = null;
+  private authorizationHeader: string | null = null;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.initialize();
+  }
+
+  private initialize() {
+    this.page.on("response", this.interceptResponse.bind(this));
+  }
+
+  private async interceptResponse(response: Response) {
+    try {
+      const url = response.url();
+      const status = response.status();
+      const contentType = response.headers()["content-type"];
+
+      if (status === 200 && url.includes("/dashboard")) {
+        if (contentType && contentType.includes("application/json")) {
+          const requestHeaders = response.request().headers();
+
+          // Log all request headers
+          console.log("Request Headers:", requestHeaders);
+
+          this.refreshTokenHeader = requestHeaders["refreshtoken"];
+          this.authorizationHeader = requestHeaders["authorization"];
+
+          logger.info(`Successfully intercepted response from ${url}`);
+        }
+      }
+    } catch (error) {
+      logger.error(`Error intercepting response: ${error}`);
+    }
+  }
+
+  public getRefreshTokenHeader() {
+    return this.refreshTokenHeader;
+  }
+
+  public getAuthorizationHeader() {
+    return this.authorizationHeader;
+  }
+
+  public async saveHeaderResponses() {
+    try {
+
+        const saveRefreshToken = this.refreshTokenHeader;
+        expect(saveRefreshToken).not.toBeNull();
+
+        const filePath = ``;
+
+    } catch (error) {
+      logger.error(`Error saving header responses: ${error}`);
+    }
+  }
+}
